@@ -50,6 +50,14 @@ class App extends Component {
     this.setState({ Data: newState })
   }
 
+  removedSelected = (theSelectedList) => {
+    let tempState = [...this.state.Data]
+    let newState = tempState.filter(email => {
+      return !theSelectedList.includes(email.id)
+    })
+    this.setState({ Data: newState })
+  }
+
   render() {
 
     let counter = 0
@@ -65,6 +73,7 @@ class App extends Component {
           selectedList={this.state.selected} 
           markAsRead={this.markAsRead}
           markAsUnread={this.markAsUnread}
+          removedSelected={this.removedSelected}
         />
         <MessageList 
           data={this.state.Data} 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Toolbar =  ({ counter, selectAll, selectedList, markAsRead, markAsUnread }) => {
+const Toolbar =  ({ counter, selectAll, selectedList, markAsRead, markAsUnread, removedSelected }) => {
 
     let anySelected = () => {
         if (selectedList.includes(true)) {
@@ -44,7 +44,7 @@ const Toolbar =  ({ counter, selectAll, selectedList, markAsRead, markAsUnread }
                 <option value="gschool">gschool</option>
                 </select>
 
-                <button className="btn btn-default">
+                <button onClick={(e) => removedSelected(selectedList)} className="btn btn-default">
                 <i className="fa fa-trash-o"></i>
                 </button>
             </div>
