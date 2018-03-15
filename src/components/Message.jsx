@@ -5,14 +5,14 @@ const Labels = ({label}) => {
     return <span className="label label-warning">{label}</span>
 }
 
-const Message = ({email, toggle}) => {
+const Message = ({email, toggle, isSelected, togSelect}) => {
     return (
         <div>
-            <div className={`row message ${(email.read) ? 'read' : 'unread'} ${(email.selected) ? 'selected' : ''}`}>
+            <div className={`row message ${(email.read) ? 'read' : 'unread'} ${(isSelected) ? 'selected' : ''}`}>
                 <div className={`col-xs-1`}>
                     <div className="row">
                     <div className="col-xs-2">
-                        <input type="checkbox" checked={`${(email.selected) ? 'checked' : ''}`} />
+                        <input onClick={(e) => togSelect(e, email.id)} type="checkbox" checked={`${(isSelected) ? 'checked' : ''}`} />
                     </div>
                     <div className="col-xs-2">
                         <i onClick={(e) => toggle(e, email.id)} className={`star fa ${(email.starred) ? 'fa-star' : 'fa-star-o'}`}></i>
