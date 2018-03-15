@@ -1,13 +1,12 @@
 import React from 'react'
 
-const Toolbar =  ({ counter, selectAll, selectedList, markAsRead, markAsUnread, removedSelected }) => {
+const Toolbar =  ({ data, counter, selectAll, selectedList, markAsRead, markAsUnread, removedSelected, addLabel,
+    removeLabel }) => {
 
     let anySelected = () => {
-        if (selectedList.includes(true)) {
-            return 'fa fa-check-square-o'
-        } else {
-            return 'fa fa-minus-square-o'
-        }
+        if (selectedList.length === 0 || !data) return 'fa fa-square-o'
+        else if (selectedList.length > 0 && selectedList.length < data.length) return 'fa fa-minus-square-o'
+        else return 'fa fa-check-square-o'
     }
 
         return (
@@ -30,14 +29,14 @@ const Toolbar =  ({ counter, selectAll, selectedList, markAsRead, markAsUnread, 
                 Mark As Unread
                 </button>
 
-                <select className="form-control label-select">
+                <select onChange={(e) => addLabel(selectedList, e.target.value)} className="form-control label-select">
                 <option>Apply label</option>
                 <option value="dev">dev</option>
                 <option value="personal">personal</option>
                 <option value="gschool">gschool</option>
                 </select>
 
-                <select className="form-control label-select">
+                <select onChange={(e) => removeLabel(selectedList, e.target.value)} className="form-control label-select">
                 <option>Remove label</option>
                 <option value="dev">dev</option>
                 <option value="personal">personal</option>

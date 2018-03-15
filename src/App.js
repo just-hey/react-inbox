@@ -27,7 +27,6 @@ class App extends Component {
   }
 
   markAsRead = (theSelectedList) => {
-    console.log(theSelectedList)
     let newState = [...this.state.Data]
     newState.forEach(email => {
       if (theSelectedList.includes(email.id)) email.read = true
@@ -58,6 +57,31 @@ class App extends Component {
     this.setState({ Data: newState })
   }
 
+  addLabel = (theSelectedList, label) => {
+    let tempState = [...this.state.Data]
+    let newState = []
+    tempState.map(email => {
+      if (theSelectedList.includes(email.id) && !email.labels.includes(label) && label !== "Apply label") {
+        email.labels.push(label)
+      }
+      return newState.push(email)
+    })
+    this.setState({ Data: newState })
+  }
+
+  removeLabel = (theSelectedList, label) => {
+    let tempState = [...this.state.Data]
+    let newState = []
+    tempState.map(email => {
+      if (theSelectedList.includes(email.id) && email.labels.includes(label)) {
+        let index = email.labels.indexOf(label)
+        email.labels.splice(index,1)
+      }
+      return newState.push(email)
+    })
+    this.setState({ Data: newState })
+  }
+
   render() {
 
     let counter = 0
@@ -68,12 +92,15 @@ class App extends Component {
     return (
       <div className="App container-fluid">
         <Toolbar 
+          data={this.state.Data} 
           counter={counter} 
           selectAll={this.selectAll} 
           selectedList={this.state.selected} 
           markAsRead={this.markAsRead}
           markAsUnread={this.markAsUnread}
           removedSelected={this.removedSelected}
+          addLabel={this.addLabel}
+          removeLabel={this.removeLabel}
         />
         <MessageList 
           data={this.state.Data} 
