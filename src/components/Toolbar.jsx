@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react'
 
-const Toolbar = () => {
-    return (
+class Toolbar extends Component {
+    render () {
+        return (
             <div className="row toolbar">
                 <div className="col-md-12">
                     <p className="pull-right">
@@ -40,7 +41,8 @@ const Toolbar = () => {
                     </button>
                 </div>
             </div>
-    );
-};
+    )
+    }
+}
 
-export default Toolbar;
+export default Toolbar
