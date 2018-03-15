@@ -26,12 +26,21 @@ class App extends Component {
     this.setState({ selected: newState })
   }
 
-  markAsRead = () => {
-
+  markAsRead = (theSelectedList) => {
+    console.log(theSelectedList)
+    let newState = [...this.state.Data]
+    newState.forEach(email => {
+      if (theSelectedList.includes(email.id)) email.read = true
+    })
+    this.setState({Data: newState})
   }
 
-  markAsUnread = () => {
-
+  markAsUnread = (theSelectedList) => {
+    let newState = [...this.state.Data]
+    newState.forEach(email => {
+      if (theSelectedList.includes(email.id)) email.read = false
+    })
+    this.setState({Data: newState})
   }
 
   toggleStar = (e, id) => {
@@ -45,13 +54,24 @@ class App extends Component {
 
     let counter = 0
     this.state.Data.forEach(el => {
-      if (el.read === true) counter++
+      if (el.read === false) counter++
     })
 
     return (
       <div className="App container-fluid">
-        <Toolbar counter={counter} selectAll={this.selectAll} selectedList={this.state.selected} />
-        <MessageList data={this.state.Data} toggle={this.toggleStar} selectedList={this.state.selected} togSelect={this.toggleSelected} />
+        <Toolbar 
+          counter={counter} 
+          selectAll={this.selectAll} 
+          selectedList={this.state.selected} 
+          markAsRead={this.markAsRead}
+          markAsUnread={this.markAsUnread}
+        />
+        <MessageList 
+          data={this.state.Data} 
+          toggle={this.toggleStar} 
+          selectedList={this.state.selected} 
+          togSelect={this.toggleSelected} 
+        />
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Toolbar =  ({ counter, selectAll, selectedList }) => {
+const Toolbar =  ({ counter, selectAll, selectedList, markAsRead, markAsUnread }) => {
 
     let anySelected = () => {
         if (selectedList.includes(true)) {
@@ -18,15 +18,15 @@ const Toolbar =  ({ counter, selectAll, selectedList }) => {
                 unread messages
                 </p>
 
-                <button className="btn btn-default">
-                <i onClick={(e)=> selectAll()} className={anySelected()}></i>
+                <button onClick={(e)=> selectAll()} className="btn btn-default">
+                <i className={anySelected()}></i>
                 </button>
 
-                <button className="btn btn-default">
+                <button onClick={(e) => markAsRead(selectedList)} className="btn btn-default">
                 Mark As Read
                 </button>
 
-                <button className="btn btn-default">
+                <button onClick={(e) => markAsUnread(selectedList)} className="btn btn-default">
                 Mark As Unread
                 </button>
 
