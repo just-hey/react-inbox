@@ -3,11 +3,26 @@ import './App.css'
 import Toolbar from './components/Toolbar'
 import MessageList from './components/MessageList'
 import Data from './seeds/Data'
+import axios from 'axios'
+
+const baseURL = `http://localhost:8082/api/`
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = { Data, selected: [] }
+  }
+
+  getMessages = () => {
+    axios.get(`${baseURL}/messages`)
+      .then(response => {
+        this.setState({ Data: response.data._embedded.messages })
+      })
+      .catch(err => console.error(err))
+  }
+
+  componentDidMount () {
+    this.getMessages()
   }
 
   toggleSelected = (e, id) => {
