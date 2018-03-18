@@ -2,28 +2,56 @@ import React, { Component } from 'react'
 import './App.css'
 import Toolbar from './components/Toolbar'
 import MessageList from './components/MessageList'
-import Data from './seeds/Data'
-import axios from 'axios'
+// import Data from './seeds/Data'
+// import axios from 'axios'
 
-const baseURL = `http://localhost:8082/api/`
+const baseURL = `http://localhost:8082/api`
 
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = { Data, selected: [] }
+    this.state = { Data: [], selected: [] }
   }
 
-  getMessages = () => {
-    axios.get(`${baseURL}/messages`)
-      .then(response => {
-        this.setState({ Data: response.data._embedded.messages })
-      })
-      .catch(err => console.error(err))
+  async getMessages () {
+    let response = await fetch(`${baseURL}/messages`)
+    let messages = await response.json()
+    this.setState({ Data: messages._embedded.messages })
   }
 
   componentDidMount () {
     this.getMessages()
   }
+
+  // MAKING A PATCH CALL WITH INFO THEN RE SETTING STATE WITH RESPONSE TO POST CALL
+  // async patchRoute (arrayOfIDs, command (str), message, req.body) {
+
+
+  //   let response = fetch(`${baseURL}/messages`, {
+  //     method: 'PATCH',
+  //     body: JSON.stringify(),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json',
+  //     }
+  //   })
+  //   const updated = await response.json()
+  //   this.setState({ Data: updated})
+  // }
+
+  // MAKING POST CALL 
+  // async postRoute (infoObj) {
+      // let response = fetch(`${baseURL}/messages`, {
+      //     method: 'POST',
+      //     body: JSON.stringify(infoObj),
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'Accept': 'application/json',
+      //     }
+      //   })
+      //   const updated = await response.json()
+      //   this.setState({ Data: updated})
+  // }
 
   toggleSelected = (e, id) => {
     let newState = [...this.state.selected]
